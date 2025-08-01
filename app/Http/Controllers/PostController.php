@@ -13,7 +13,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::orderBy("id","desc")->paginate(10);
+        $post = Post::latest()->simplePaginate(5); #use simplePaginate to change the style of the page
        $categories = Category::get();
     //    dump($categories); #the page is visible  
    //    dd($categories); #it stands for dump and die....page doesnt visible after using it

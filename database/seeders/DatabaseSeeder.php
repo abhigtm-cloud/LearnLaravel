@@ -26,26 +26,26 @@ class DatabaseSeeder extends Seeder
             // 'email_verified_at' => now(), // Optional: if your 'users' table has this column
         ]);
 
-        // 2. Create Categories
-        //    - Use 'Category::create()' (capital 'C')
-        //    - This must run BEFORE Post::factory() because posts need categories
-        $categories = [
-            "Technology",
-            "Health",
-            "Science",
-            "Games",
-            "Politics",
-            "Entertainment"
-        ];
+        // // 2. Create Categories
+        // //    - Use 'Category::create()' (capital 'C')
+        // //    - This must run BEFORE Post::factory() because posts need categories
+        // $categories = [
+        //     "Technology",
+        //     "Health",
+        //     "Science",
+        //     "Games",
+        //     "Politics",
+        //     "Entertainment"
+        // ];
 
-        foreach ($categories as $cat) {
-            Category::create(["name" => $cat]);
-        }
+        // foreach ($categories as $cat) {
+        //     Category::create(["name" => $cat]);
+        // }
 
-        // 3. Create Posts using the factory
-        //    - Use 'Post::factory()' (capital 'P')
-        //    - This must run AFTER users and categories are created,
-        //      as the PostFactory links to existing user and category IDs.
-        Post::factory(100)->create();
+        // // 3. Create Posts using the factory
+        // //    - Use 'Post::factory()' (capital 'P')
+        // //    - This must run AFTER users and categories are created,
+        // //      as the PostFactory links to existing user and category IDs.
+        // Post::factory(100)->create();
     }
 }
