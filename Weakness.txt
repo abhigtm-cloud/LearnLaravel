@@ -1,0 +1,21 @@
+Hey there ! my weakness is that i am not cleared with my concepts and i took this as a opportunity to improve everything :-
+
+list of things which should be cleared in my head :- 
+1. MVC
+2. DatabaseSeeder
+3. Migrations
+$. How the files are interlinked 
+5. Controller , factories and tinker
+6. breeze
+7 . Create file using the command lines 
+8. having understanding of the things 
+9. go through the documentation for understanding varioud terms in the applicatiion
+10. complete the video till 12th of august
+
+*LIST of things i want to do along side it*
+1. work on maths
+2. revise pytthon and numpy with pandas
+3. Matplotlib
+4. go ahead in ML
+5. revise Mern stack
+6. do shit level dev with friends as i decided (do some project after clg till 7 4 days a week)
