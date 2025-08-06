@@ -32,7 +32,7 @@
                             </div>
                         </button>
                     </x-slot>
-
+{{-- Editing the navigation panel of the page --}}
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
