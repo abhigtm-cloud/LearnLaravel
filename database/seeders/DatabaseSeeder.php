@@ -35,7 +35,9 @@ class DatabaseSeeder extends Seeder
             "Science",
             "Games",
             "Politics",
-            "Entertainment"
+            "Entertainment",
+            "Artificial Intelligence"
+
         ];
 
         foreach ($categories as $cat) {
