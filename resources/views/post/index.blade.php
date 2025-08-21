@@ -5,8 +5,8 @@
             {{-- Category Navigation --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg mb-6">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
-                    <x-category-tabs name="Abhi">
-                 NO CATEGORY AVAILABLE         {{-- This text can be used as slot as it will be printed while i use {{slot}} , example in blade file--}}
+                    <x-category-tabs name="Abhii">
+                 NO CATEGORY AVAILABLE         {{-- slot as it will be  This text can be used asprinted while i use {{slot}} , example in blade file--}}
                     </x-category-tabs>
                     {{-- i can use another variable in the component the way i write above and if i want to use the variable in space of name , just need to add : before variable --}}
                 </div>

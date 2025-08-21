@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Exists;
 
 class PostController extends Controller
 {
@@ -18,7 +18,7 @@ class PostController extends Controller
     //    dump($categories); #the page is visible  
    //    dd($categories); #it stands for dump and die....page doesnt visible after using it
     
-    return view("dashboard",["post"=> $post]);
+    return view("post.index",["post"=> $post]);
     }
 
     /**
@@ -26,7 +26,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $categories = Category::all();
+        return view('post.create',["categories"=>$categories]);
     }
 
     /**
@@ -34,7 +35,14 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dump($request->all());
+        $data = $request->validate([
+            'image'=>['required','image','mimes:jpg,jpeg,png,gif,svg','max:2048'],
+            'title'=>['required'],
+            'content'=>['required'],
+            'category_id'=>['required','exists:categories,id']
+        ]);
+        dd($data);
     }
 
     /**

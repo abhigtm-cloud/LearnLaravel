@@ -15,5 +15,5 @@
                         {{ $slot }}
                         {{-- the NO CATER+GORY AVAILABLE SLOT will be used when there will be no category --}}
                         @endforelse
-                        {{ $name }}
+                        {{-- {{ $name }} this is used to use the variavle name whatever we write in index.blade wheneber we use this file --}}
                     </ul>
