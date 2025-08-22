@@ -19,11 +19,10 @@ class DatabaseSeeder extends Seeder
         //    - Use 'User::create()' (capital 'U')
         //    - HASH THE PASSWORD using Hash::make()
         //    - Correct email typo 'exmple.com' to 'example.com'
-        User::create([
-            "name" => "Test User",
-            "email" => "test@example.com", // Corrected typo
-            "password" => Hash::make('password'), // CRITICAL: Password MUST be hashed
-            // 'email_verified_at' => now(), // Optional: if your 'users' table has this column
+        User::factory()->create([
+            'name' => 'Test User',
+            'email' => 'test@example.com',
+            'username' => 'testuser', // Add this line
         ]);
 
         // 2. Create Categories
@@ -48,6 +47,6 @@ class DatabaseSeeder extends Seeder
         //    - Use 'Post::factory()' (capital 'P')
         //    - This must run AFTER users and categories are created,
         //      as the PostFactory links to existing user and category IDs.
-        Post::factory(100)->create();
+        // Post::factory(100)->create();
     }
 }

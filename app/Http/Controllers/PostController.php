@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
+use Illuminate\Support\Str;
 
 class PostController extends Controller
 {
@@ -42,7 +44,17 @@ class PostController extends Controller
             'content'=>['required'],
             'category_id'=>['required','exists:categories,id']
         ]);
-        dd($data);
+        // dd($data);
+
+        $image = $data['image'];
+        unset($data['image']);
+        $data['user_id']=Auth::id();
+        $data['slug']=Str::slug($data['title']);
+        $imagePath = $image->store('posts','public');
+        $data['image'] = $imagePath;
+        Post::create($data);
+       
+        return redirect()->route('dashboard');
     }
 
     /**

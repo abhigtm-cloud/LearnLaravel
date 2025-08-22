@@ -11,25 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        // Table name is 'posts' (lowercase, plural)
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
+            $table->string('title');
+            $table->text('content');
+            $table->string('slug')->unique();
             $table->string('image')->nullable();
-            $table->string('title'); // Not nullable - needs data from factory
-            $table->string('slug')->unique(); // Not nullable, unique - needs data from factory
-            $table->longText('content'); // Not nullable - needs data from factory (corrected casing and syntax)
-            
-            // Foreign key to 'categories' table
-            // Column name 'category_id' (snake_case)
-            // References 'categories' table (lowercase, plural)
-            $table->foreignId('category_id')->constrained('categories')->onDelete('cascade');
-            
-            // Foreign key to 'users' table
-            // Column name 'user_id' (snake_case)
-            // References 'users' table (lowercase, plural)
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            
-            $table->timestamp('published_at')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('category_id')->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

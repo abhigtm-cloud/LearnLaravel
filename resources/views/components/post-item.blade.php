@@ -39,10 +39,10 @@
 
                         <div class="w-3/4 p-6">
                             <h5 class="mb-2 text-2xl font-bold text-gray-900">
-                                {{ $pos->title ?? 'Omnis excepturi sint voluptas placeat accusantium voluptatem ut.' }}
+                                {{ $post->title }}
                             </h5>
                             <p class="mb-3 text-gray-700 line-clamp-3">
-                                {{ $pos->excerpt ?? 'Ut vel architecto excepturi expedita neque laboriosam unde. Quos iste corporis est natus autem. Non corporis doloribus quia saepe omnis...' }}
+                                {{$post->content }}
                             </p>
                             <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
                                 Read more →
@@ -52,7 +52,7 @@
                         
                         <div class="h-full ">
                             <img class="rounded-lg object-cover w-full h-auto "
-                                 src="{{ $pos->image_url ?? 'https://flowbite.com/docs/images/blog/image-4.jpg' }}"
+                             src="{{ Storage::url($post->image)     {{-- ?? 'https://flowbite.com/docs/images/blog/image-4.jpg'--}} }}" 
                                  alt="Post Image">
                         </div>
                     </a>
