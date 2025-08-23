@@ -17,6 +17,12 @@
         @csrf
         @method('patch')
 
+        @if($user->image)
+            <div>
+                <img src="{{ Storage::url($user->image) }}" alt="{{ $user->name }}" class="rounded-full h-20 w-20"/>
+            </div>
+        
+        @endif
         <div>
             <x-input-label for="name" :value="__('Name')" />
             <x-text-input id="name" name="name" type="text" class="mt-1 block w-full" :value="old('name', $user->name)"
@@ -40,7 +46,7 @@
         <div class="mt-4">
             <x-input-label for="bio" :value="__('Bio')" />
             <textarea id="bio" name="bio" rows="6"
-                class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('bio') }}</textarea>
+                class="block mt-1 w-full border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300 focus:border-indigo-500 dark:focus:border-indigo-600 focus:ring-indigo-500 dark:focus:ring-indigo-600 rounded-md shadow-sm">{{ old('bio',$user->bio) }}</textarea>
             <x-input-error :messages="$errors->get('bio')" class="mt-2" />
         </div>
 
