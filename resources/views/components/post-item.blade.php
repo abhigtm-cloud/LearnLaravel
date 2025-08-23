@@ -33,7 +33,10 @@
             </div>  --}}
  
              
-                    <a href="#"
+                    <a href="{{ route('post.show',[
+                    "username"=>$post->user->username,
+                    "post"=>$post->slug])
+                     }}"
                        class="flex items-center bg-white border border-gray-200 rounded-lg shadow-sm hover:bg-gray-100 transition md:max-w-3xl mx-auto">
 
 
