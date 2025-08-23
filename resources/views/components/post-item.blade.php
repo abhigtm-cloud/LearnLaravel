@@ -44,7 +44,7 @@
                             <p class="mb-3 text-gray-700 line-clamp-3">
                                 {{$post->content }}
                             </p>
-                            <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition">
+                            <button class="inline-flex items-center px-4 py-2 text-sm font-medium text-black bg-blue-600 rounded-lg hover:bg-blue-700 transition">
                                 Read more →
                             </button>
                         </div>

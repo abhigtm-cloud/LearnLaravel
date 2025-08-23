@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
-            'username' => 'testuser', // Add this line
+            'username' => 'test-user', // Add this line
         ]);
 
         // 2. Create Categories

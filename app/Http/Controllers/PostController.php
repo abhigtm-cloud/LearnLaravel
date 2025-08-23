@@ -1,6 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Http\Requests\PostControllerRequest;
 use App\Models\Category;
 use App\Models\Post;
 use Illuminate\Support\Facades\Auth;
@@ -35,16 +37,17 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(PostControllerRequest $request)
     {
         // dump($request->all());
-        $data = $request->validate([
-            'image'=>['required','image','mimes:jpg,jpeg,png,gif,svg','max:2048'],
-            'title'=>['required'],
-            'content'=>['required'],
-            'category_id'=>['required','exists:categories,id']
-        ]);
+        // $data = $request->validate([
+        //     // 'image'=>['required','image','mimes:jpg,jpeg,png,gif,svg','max:2048'],
+        //     // 'title'=>['required'],
+        //     // 'content'=>['required'],
+        //     // 'category_id'=>['required','exists:categories,id']
+        // ]);
         // dd($data);
+        $data = $request->validated();
 
         $image = $data['image'];
         unset($data['image']);

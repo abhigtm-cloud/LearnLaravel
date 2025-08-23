@@ -26,7 +26,7 @@ class UserFactory extends Factory
         $name = fake()->name();
         return [
             'name' => $name,
-            'username' => fake()->unique()->userName(), // Add this
+            'username' => Str::slug($name), // Add this to add fake username
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
