@@ -69,7 +69,9 @@ class PostController extends Controller
 //     'title' => $post->title,
 //     'slug' => $post->slug
 // ]);
-        return $post->slug;
+        // return $post->slug;
+        return view('post.show',['post'=>$post]);
+        // return redirect()->route('post.show');
         
     }
 
