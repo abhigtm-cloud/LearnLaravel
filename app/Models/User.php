@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable  implements MustVerifyEmail
 {
@@ -60,4 +61,9 @@ class User extends Authenticatable  implements MustVerifyEmail
     {
         return $this->image ? Storage::url($this->image) : null;
     }
+    public function posts(): HasMany
+    {
+        return $this->hasMany(Post::class);
+    }
+
 }
