@@ -9,7 +9,7 @@
                     <x-user-avatar :user="$post->user" class="w-12 h-12 rounded-full" />
                     <div>
                         <div class="flex items-center gap-2">
-                            <a href="#" class="hover:underline text-gray-900 dark:text-white font-medium">
+                            <a href="{{route("profile.show",$post->user)}}" class="hover:underline text-gray-900 dark:text-white font-medium">
                                 {{ $post->user->name }}
                             </a>
                             <button class="text-indigo-600 dark:text-indigo-400 text-sm font-medium">
