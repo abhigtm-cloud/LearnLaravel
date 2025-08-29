@@ -13,7 +13,9 @@
                     <div class="flex flex-col items-center -mt-16">
                         <div class="relative mb-8">
                             <x-user-avatar :user="$user" size="w-32 h-32" class="ring-4 ring-white dark:ring-gray-800 shadow-xl bg-white dark:bg-gray-800" />
-                          
+                            <div class="absolute -bottom-2 -right-2 bg-green-400 w-8 h-8 rounded-full border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center">
+                              
+                            </div>
                         </div>
                         
                         <!-- Name and Title -->
@@ -59,30 +61,64 @@
             </div>
 
             <!-- Stories Section -->
+            @if($post->count() > 0)
             <div class="mt-12">
                 <div class="flex items-center gap-4 mb-10">
                     <h2 class="text-2xl font-bold text-gray-900 dark:text-white">Stories</h2>
                     <div class="flex-1 h-px bg-gray-200 dark:bg-gray-700"></div>
                 </div>
 
-                @forelse ($post as $p)
+                @foreach ($post as $p)
                     <div class="mb-8 transform transition-all duration-200 hover:scale-[1.01]">
                         <div class="bg-white dark:bg-gray-800 rounded-2xl p-8 shadow-lg border border-gray-200 dark:border-gray-700 hover:shadow-xl transition-all duration-200">
                             <x-post-item :post="$p"></x-post-item>
                         </div>
                     </div>
-                @empty
-                    <div class="text-center py-24 bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700">
-                        <div class="w-16 h-16 bg-gray-100 dark:bg-gray-700 rounded-full mx-auto mb-8 flex items-center justify-center">
-                            <svg class="w-8 h-8 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-                            </svg>
-                        </div>
-                        <h3 class="text-xl font-medium text-gray-900 dark:text-white mb-4">No Stories Yet</h3>
-                        <p class="text-gray-600 dark:text-gray-400">This writer is preparing something amazing!</p>
-                    </div>
-                @endforelse
+                @endforeach
             </div>
+            @else
+            <!-- Compact Centered Empty State -->
+            <div class="flex justify-center mt-12 px-4">
+                <div class="max-w-sm w-full bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-gray-200 dark:border-gray-700 p-6 text-center mx-4">
+                    <!-- Small Icon -->
+                    <div class="w-14 h-14 bg-gray-100 dark:bg-gray-700 rounded-full mx-auto mb-4 flex items-center justify-center">
+                        <svg class="w-6 h-6 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.746 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                        </svg>
+                    </div>
+                    
+                    <!-- Compact Title -->
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-2">No Stories Yet</h3>
+                    
+                    <!-- Short Description -->
+                    <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">
+                        {{ $user->name }} hasn't published any stories yet.
+                    </p>
+                    
+                    <!-- Compact Actions -->
+                                      <!-- Compact Actions -->
+                    @guest
+                    <div class="f">
+                        <a href="{{ route('login') }}" class="flex flex-col items-center space-y-2 py-2.5 px-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-200 text-center">
+                            Sign in to follow
+                        </a>
+                        &nbsp;
+                        <a href="{{ route('register') }}" class="flex flex-col items-center space-y-2 py-2.5 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 text-center">
+                            Join Medium
+                        </a>
+                    
+                    @endguest
+                    
+                    @auth
+                    <div class="flex justify-center">
+                        <a href="{{ route('dashboard') }}" class="w-full py-2.5 px-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-200 text-center">
+                            Explore Stories
+                        </a>
+                    </div>
+                    @endauth
+                </div>
+            </div>
+            @endif
         </div>
     </div>
 </x-app-layout>

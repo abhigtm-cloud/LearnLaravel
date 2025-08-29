@@ -77,11 +77,13 @@
                             <div class="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
                                 <div class="flex items-center gap-3">
                                     <x-user-avatar :user="auth()->user()" size="w-8 h-8" />
+                                        </div>
+                                        &nbsp;
                                     <div>
                                         <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ Auth::user()->name }}</p>
                                         <p class="text-xs text-gray-500 dark:text-gray-400">{{ Auth::user()->email }}</p>
                                     </div>
-                                </div>
+                               
                             </div>
 
                             <div class="py-2">
