@@ -39,7 +39,14 @@
                         @endif
                         
                         @if (auth()->user() && auth()->user()->id !== $user->id)
-                        <div class="flex items-center gap-4 mt-6">
+                        <div x-data="{following:{{ $user->isFollowedBy(auth()->user()) ? 'true' : 'false' }},
+                            follow(){
+                            this.following = !this.following
+                            axios.post('/follow/{{user->id}}').then(res=>{console.log(red.data)})
+                            .catch(err=>{
+                             console.log(err)
+                            })
+                        }}" class="flex items-center gap-4 mt-6">
                             <button @click="follow()" 
                                 class="inline-flex items-center px-6 py-2 font-medium text-sm rounded-full transition-all duration-200 transform hover:scale-105"
                                 x-text="following ? 'Following' : 'Follow'"

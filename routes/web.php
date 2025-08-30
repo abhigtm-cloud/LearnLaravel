@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PublicProfileController;
@@ -14,7 +15,7 @@ Route::get("/medium/@{user:username}",[PublicProfileController::class,"show"])->
 Route::middleware(['auth', 'verified'])->group(function(){
 Route::get('/dashboard',[PostController::class,'index'])->name('dashboard');
 Route::get("/post/@{username}/{post:slug}",[PostController::class,'show'])->name('post.show');
-
+Route::post("follow/{user}",[FollowerController::class,'followUnfollow'])->name('follow');
 Route::get("/post/create",[PostController::class,'create'])->name('post.create');
 Route::post("/post/store",[PostController::class,'store'])->name('post.store');
 });
