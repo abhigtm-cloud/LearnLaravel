@@ -52,11 +52,12 @@ class User extends Authenticatable  implements MustVerifyEmail
         ];
     }
 
-    /**
-     * Get the full URL for the user's image.
-     *
-     * @return string|null
-     */
+    public function following(){
+        return $this->belongsToMany(User::class,'followers','follower_id','user_id');
+    }
+        public function follower(){
+        return $this->belongsToMany(User::class,'followers','user_id','follower_id');
+    }
     public function ImageUrl()
     {
         return $this->image ? Storage::url($this->image) : null;
