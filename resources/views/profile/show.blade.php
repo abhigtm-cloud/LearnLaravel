@@ -14,7 +14,9 @@
                         <div class="relative mb-8">
                             <x-user-avatar :user="$user" size="w-32 h-32" class="ring-4 ring-white dark:ring-gray-800 shadow-xl bg-white dark:bg-gray-800" />
                             <div class="absolute -bottom-2 -right-2 bg-green-400 w-8 h-8 rounded-full border-4 border-white dark:border-gray-800 shadow-lg flex items-center justify-center">
-                              
+                                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                                </svg>
                             </div>
                         </div>
                         
@@ -24,7 +26,7 @@
                         <!-- Stats -->
                         <div class="flex items-center gap-6 text-gray-600 dark:text-gray-300 text-sm mb-8">
                             <div class="flex items-center gap-2">
-                                <span x-text="followersCount" class="font-medium text-gray-900 dark:text-white">{{$user->follower()->count()}}</span>
+                                <span class="font-medium text-gray-900 dark:text-white">{{ $user->follower()->count() }}</span>
                                 <span>followers</span>
                             </div>
                             <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
@@ -39,29 +41,30 @@
                         @endif
                         
                         @if (auth()->user() && auth()->user()->id !== $user->id)
-                        <div x-data="{following:{{ $user->isFollowedBy(auth()->user()) ? 'true' : 'false' }},
-                            follow(){
-                            this.following = !this.following
-                            axios.post('/follow/{{user->id}}').then(res=>{console.log(red.data)})
-                            .catch(err=>{
-                             console.log(err)
-                            })
-                        }}" class="flex items-center gap-4 mt-6">
-                            <button @click="follow()" 
-                                class="inline-flex items-center px-6 py-2 font-medium text-sm rounded-full transition-all duration-200 transform hover:scale-105"
-                                x-text="following ? 'Following' : 'Follow'"
-                                :class="following ? 
-                                    'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600' : 
-                                    'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100'">
-                            </button>
-                            
-                            <button class="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                                </svg>
-                                Message
-                            </button>
-                        </div>
+                        <x-follow-ctr :user="$user">
+                            <div class="flex items-center gap-4 mt-6">
+                                <button @click="follow()" 
+                                    class="inline-flex items-center px-6 py-2 font-medium text-sm rounded-full transition-all duration-200 transform hover:scale-105"
+                                    x-text="following ? 'Following' : 'Follow'"
+                                    :class="following ? 
+                                        'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600' : 
+                                        'bg-gray-900 dark:bg-white text-white dark:text-gray-900 hover:bg-gray-800 dark:hover:bg-gray-100'">
+                                </button>
+                                
+                                <button class="inline-flex items-center gap-2 px-4 py-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white font-medium text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-all duration-200">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                                    </svg>
+                                    Message
+                                </button>
+                                
+                                <!-- Live Follower Count Display -->
+                                <div class="text-sm text-gray-600 dark:text-gray-300">
+                                    <span x-text="followerCount" class="font-medium text-gray-900 dark:text-white"></span>
+                                    <span>followers</span>
+                                </div>
+                            </div>
+                        </x-follow-ctr>
                         @endif
                     </div>
                 </div>
@@ -103,17 +106,15 @@
                     </p>
                     
                     <!-- Compact Actions -->
-                                      <!-- Compact Actions -->
                     @guest
-                    <div class="f">
-                        <a href="{{ route('login') }}" class="flex flex-col items-center space-y-2 py-2.5 px-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-200 text-center">
+                    <div class="flex flex-col items-center space-y-2">
+                        <a href="{{ route('login') }}" class="w-full py-2.5 px-4 bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-sm font-medium rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-all duration-200 text-center">
                             Sign in to follow
                         </a>
-                        &nbsp;
-                        <a href="{{ route('register') }}" class="flex flex-col items-center space-y-2 py-2.5 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 text-center">
+                        <a href="{{ route('register') }}" class="w-full py-2.5 px-4 border border-gray-300 dark:border-gray-600 text-gray-700 dark:text-gray-300 text-sm font-medium rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-200 text-center">
                             Join Medium
                         </a>
-                    
+                    </div>
                     @endguest
                     
                     @auth

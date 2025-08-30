@@ -11,7 +11,7 @@ class FollowerController extends Controller
    public function followUnfollow(User $user){
     $user->follower()->toggle(Auth::user());
     return response()->json([
-        'followers' => $user->follower()->count(),
+        'followerCount' => $user->follower()->count(),
     ]);   
 }
 }

@@ -12,9 +12,22 @@
                             <a href="{{route("profile.show",$post->user)}}" class="hover:underline text-gray-900 dark:text-white font-medium">
                                 {{ $post->user->name }}
                             </a>
-                            <button class="text-indigo-600 dark:text-indigo-400 text-sm font-medium">
+                            
+                            @if (auth()->check() && auth()->user()->id !== $post->user->id)
+                            <x-follow-ctr :user="$post->user">
+                                <button @click="follow()" 
+                                    class="px-3 py-1 text-sm font-medium rounded-full transition-all duration-200"
+                                    x-text="following ? 'Following' : 'Follow'"
+                                    :class="following ? 
+                                        'bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 hover:bg-gray-300 dark:hover:bg-gray-600' : 
+                                        'bg-indigo-600 dark:bg-indigo-500 text-white hover:bg-indigo-700 dark:hover:bg-indigo-400'">
+                                </button>
+                            </x-follow-ctr>
+                            @elseif (!auth()->check())
+                            <a href="{{ route('login') }}" class="px-3 py-1 bg-indigo-600 text-white text-sm font-medium rounded-full hover:bg-indigo-700 transition-all duration-200">
                                 Follow
-                            </button>
+                            </a>
+                            @endif
                         </div>
                         <div class="flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
                             <span>{{ $post->readTime() }} min read</span>
