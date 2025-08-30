@@ -24,7 +24,7 @@
                         <!-- Stats -->
                         <div class="flex items-center gap-6 text-gray-600 dark:text-gray-300 text-sm mb-8">
                             <div class="flex items-center gap-2">
-                                <span x-text="followersCount" class="font-medium text-gray-900 dark:text-white">0</span>
+                                <span x-text="followersCount" class="font-medium text-gray-900 dark:text-white">{{$user->follower()->count()}}</span>
                                 <span>followers</span>
                             </div>
                             <div class="w-1 h-1 bg-gray-400 rounded-full"></div>
