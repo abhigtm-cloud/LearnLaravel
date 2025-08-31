@@ -15,7 +15,7 @@
             })
     }
 }">
-    {{ $slot }}
+    {{ $slot }} //confusion in the slot usage here
 </div>
 @else
 <div {{ $attributes }}>
