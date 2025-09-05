@@ -39,7 +39,7 @@
 
                 <!-- Clap Section -->
                 <div class="mb-8">
-                    <x-clap-button />
+                    <x-clap-button  :post="$post"/>
                 </div>
 
                 <!-- Featured Image -->
