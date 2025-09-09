@@ -2,7 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Post;     // Ensure this is 'Post' (capital P)
+use App\Models\UserPost;     // Ensure this is 'UserPost' (capital P)
 use App\Models\User;     // Ensure this is 'User' (capital U)
 use App\Models\Category; // Ensure this is 'Category' (capital C)
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -14,7 +14,7 @@ class PostFactory extends Factory
      *
      * @var string
      */
-    protected $model = Post::class; // Matches the 'Post' model class
+    protected $model = UserPost::class; // Matches the 'UserPost' model class
 
     /**
      * Define the model's default state.

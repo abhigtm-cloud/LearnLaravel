@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Clap extends Model
 {
-    protected $fillable =['post_id','user_id'];
+    protected $fillable = ['user_id', 'userpost_id'];
 
-    public function post(){
-        return $this->belongsTo(Post::class);
-    }
-
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
+    public function userpost()
+    {
+        return $this->belongsTo(UserPost::class, 'userpost_id');
+    }
 }
