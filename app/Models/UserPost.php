@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
-class Post extends Model
+class UserPost extends Model
 {
     use HasFactory;
 
@@ -21,18 +21,19 @@ class Post extends Model
     ];
 
     /**
-     * Get the user that owns the post.
+     * Get the user that owns the userpost.
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
-    public function claps(){
-        return $this->hasMany(Clap::class);
+    public function claps()
+    {
+        return $this->hasMany(Clap::class, 'userpost_id');
     }
 
     /**
-     * Get the category that owns the post.
+     * Get the category that owns the userpost.
      */
     public function category(): BelongsTo
     {

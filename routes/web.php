@@ -14,12 +14,13 @@ Route::get('/', function () {
 Route::get("/medium/@{user:username}",[PublicProfileController::class,"show"])->name("profile.show");
 
 Route::middleware(['auth', 'verified'])->group(function(){
-Route::get('/dashboard',[PostController::class,'index'])->name('dashboard');
-Route::get("/post/@{username}/{post:slug}",[PostController::class,'show'])->name('post.show');
-Route::post("follow/{user}",[FollowerController::class,'followUnfollow'])->name('follow');
-Route::post("clap/{post}",[ClapController::class,'clap'])->name('clap');
-Route::get("/post/create",[PostController::class,'create'])->name('post.create');
-Route::post("/post/store",[PostController::class,'store'])->name('post.store');
+    Route::get('/dashboard',[PostController::class,'index'])->name('dashboard');
+    Route::get("/post/@{username}/{post:slug}",[PostController::class,'show'])->name('post.show'); // Move this inside auth middleware
+    Route::post("/follow/{user}",[FollowerController::class,'followUnfollow'])->name('follow');
+    Route::get("/post/create",[PostController::class,'create'])->name('post.create');
+    Route::post("/post/store",[PostController::class,'store'])->name('post.store');
+    Route::post('/clap/{post}', [ClapController::class, 'clappost'])->name('clappost');
+    // Route::get('/clap/{post}', [ClapController::class, 'clapget'])->name('clapget');
 });
 
 

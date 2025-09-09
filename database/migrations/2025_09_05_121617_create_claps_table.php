@@ -13,9 +13,11 @@ return new class extends Migration
     {
         Schema::create('claps', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
-            $table->timestamp('created_at')->nullable();
+            $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('userpost_id')->constrained('user_posts')->onDelete('cascade');
+            $table->timestamps();
+            
+            $table->unique(['user_id', 'userpost_id']);
         });
     }
 

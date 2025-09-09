@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostControllerRequest;
 use App\Models\Category;
-use App\Models\Post;
+use App\Models\UserPost;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
@@ -17,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = Post::latest()->simplePaginate(5); #use simplePaginate to change the style of the page
+        $post = UserPost::latest()->simplePaginate(5); #use simplePaginate to change the style of the page
       
     //    dump($categories); #the page is visible  
    //    dd($categories); #it stands for dump and die....page doesnt visible after using it
@@ -55,7 +55,7 @@ class PostController extends Controller
         $data['slug']=Str::slug($data['title']);
         $imagePath = $image->store('posts','public');
         $data['image'] = $imagePath;
-        Post::create($data);
+        UserPost::create($data);
        
         return redirect()->route('dashboard');
     }
@@ -63,7 +63,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $username ,Post $post)
+    public function show(string $username ,UserPost $post)
     {
 //         dd([
 //     'title' => $post->title,
@@ -78,7 +78,7 @@ class PostController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Post $post)
+    public function edit(UserPost $post)
     {
         //
     }
@@ -86,7 +86,7 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Post $post)
+    public function update(Request $request, UserPost $post)
     {
         //
     }
@@ -94,7 +94,7 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Post $post)
+    public function destroy(UserPost $post)
     {
         //
     }
