@@ -22,7 +22,7 @@ class ProfileUpdateRequest extends FormRequest
      */
     public function rules(): array
     {
-        $username = Auth::user();
+        $user = Auth::user();
         return [
             'name' => ['required', 'string', 'max:255'],
             'username' => [
@@ -30,7 +30,7 @@ class ProfileUpdateRequest extends FormRequest
                 'string',
                 'lowercase',
                 'max:255',
-                Rule::unique(User::class)->ignore($username),
+                Rule::unique(User::class)->ignore($user->id),
             ],
             'image'=>['nullable','image','mimes:jpg,jpeg,svg,gif,png','max:2048'],
             'bio'=>['nullable','string'],
@@ -40,7 +40,7 @@ class ProfileUpdateRequest extends FormRequest
                 'lowercase',
                 'email',
                 'max:255',
-                Rule::unique(User::class)->ignore($username),
+                Rule::unique(User::class)->ignore($user->id),
             ],
         ];
     }

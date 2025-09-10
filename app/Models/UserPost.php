@@ -39,7 +39,7 @@ class UserPost extends Model
     {
         return $this->belongsTo(Category::class);
     }
-     public function ImageUrl()
+     public function imageUrl()
     {
         return $this->image ? Storage::url($this->image) : null;
     }

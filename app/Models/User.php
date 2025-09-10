@@ -58,7 +58,7 @@ class User extends Authenticatable  implements MustVerifyEmail
         public function follower(){
         return $this->belongsToMany(User::class,'followers','user_id','follower_id');
     }
-    public function ImageUrl()
+    public function imageUrl()
     {
         return $this->image ? Storage::url($this->image) : null;
     }

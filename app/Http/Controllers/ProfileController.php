@@ -30,6 +30,9 @@ public function update(Request $request): RedirectResponse
     $image = $data['image'] ?? null;
     if ($image) {
         $data['image'] = $image->store('avatars', 'public');
+    } else {
+        // Remove image key if no image is uploaded to avoid overwriting existing image with null
+        unset($data['image']);
     }
     $request->user()->fill($data);
 
