@@ -18,7 +18,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        $user = auth()->user();
+        $user = Auth::user();
         $query = UserPost::latest();
         if($user){
             $ids = $user->following()->pluck("users.id");
