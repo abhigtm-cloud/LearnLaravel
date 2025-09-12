@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostControllerRequest;
 use App\Models\Category;
 use App\Models\UserPost;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
@@ -17,7 +18,13 @@ class PostController extends Controller
      */
     public function index()
     {
-        $post = UserPost::latest()->simplePaginate(5); #use simplePaginate to change the style of the page
+        $user = auth()->user();
+        $query = UserPost::latest();
+        if($user){
+            $ids = $user->following()->pluck("users.id");
+            $query->whereIn("user_id", $ids);
+        }
+        $post = $query->simplePaginate(5); #use simplePaginate to change the style of the page
       
     //    dump($categories); #the page is visible  
    //    dd($categories); #it stands for dump and die....page doesnt visible after using it
@@ -74,7 +81,10 @@ class PostController extends Controller
         // return redirect()->route('post.show');
         
     }
-
+public function category(Category $category){
+      $post = $category->posts()->latest()->simplePaginate(5);
+      return view("post.index",["post"=> $post]);
+}
     /**
      * Show the form for editing the specified resource.
      */
