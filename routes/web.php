@@ -9,6 +9,18 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get("/medium/@{user:username}",[PublicProfileController::class,"show"])->name("profile.show");
+
+// Test route to serve media files
+Route::get('/media/{id}/{filename}', function ($id, $filename) {
+    $path = storage_path('app/public/' . $id . '/' . $filename);
+    
+    if (!file_exists($path)) {
+        abort(404);
+    }
+    
+    return response()->file($path);
+});
+
    Route::get('/',[PostController::class,'index'])->name('dashboard');
        Route::get("/post/@{username}/{post:slug}",[PostController::class,'show'])->name('post.show'); 
 
