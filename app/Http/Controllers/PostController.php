@@ -151,6 +151,7 @@ public function myPosts(User $user){
      */
     public function destroy(UserPost $post)
     {
-        //
+        $post->delete();
+        return redirect()->route('my.post', ['user' => Auth::user()->username]);
     }
 }

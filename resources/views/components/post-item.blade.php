@@ -64,6 +64,8 @@
             <div class="flex items-center">
                 <x-clap-button :post="$post"/>
             </div>
+
+           
         </div>
 
     </div>

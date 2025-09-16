@@ -7,7 +7,7 @@
 
                     <form action="{{ route('post.store') }}" enctype="multipart/form-data" method="POST">
                         @csrf
-                        @dump($errors)
+                        {{-- @dump($errors) --}}
                         <!-- Title -->
                         <div>
                             <x-input-label for="title" :value="__('Title')" />
