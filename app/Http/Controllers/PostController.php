@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PostController extends Controller
 {
@@ -18,11 +20,21 @@ class PostController extends Controller
      */
     public function index()
     {
+        // DB::listen(function($query){
+        //    Log::info($query->sql);
+        // });
         $user = Auth::user();
+       
         $query = UserPost::latest();
+                         
         if($user){
             $ids = $user->following()->pluck("users.id");
             $query->whereIn("user_id", $ids);
+            
+            // Also eager load user's claps for these posts
+            $query->with(['claps' => function($clapQuery) use ($user) {
+                $clapQuery->where('user_id', $user->id);
+            }]);
         }
         $post = $query->simplePaginate(5); #use simplePaginate to change the style of the page
       
@@ -77,16 +89,50 @@ class PostController extends Controller
 // ]);
         // return $post->slug;
         return view('post.show',['post'=>$post]);
+        
         // return redirect()->route('post.show');
         
     }
-public function category(Category $category){
-      $post = $category->posts()->latest()->simplePaginate(5);
-      return view("post.index",["post"=> $post]);
-}
+    public function category(Category $category){
+        $user = Auth::user();
+        
+        $query = $category->posts()
+                         ->with(['user', 'claps'])
+                         ->withCount('claps')
+                         ->latest();
+                         
+        if($user){
+            // Eager load user's claps for these posts
+            $query->with(['claps' => function($clapQuery) use ($user) {
+                $clapQuery->where('user_id', $user->id);
+            }]);
+        }
+        
+        $post = $query->simplePaginate(5);
+        return view("post.index",["post"=> $post]);
+    }
     /**
      * Show the form for editing the specified resource.
      */
+public function myPosts(User $user){
+      $currentUser = Auth::user();
+      
+      $query = $user->posts()
+                         ->with(['user', 'claps'])
+                         ->withCount('claps')
+                         ->latest();
+                         
+        if($currentUser){
+            // Eager load current user's claps for these posts
+            $query->with(['claps' => function($clapQuery) use ($currentUser) {
+                $clapQuery->where('user_id', $currentUser->id);
+            }]);
+        }
+        
+        $post = $query->simplePaginate(5);
+        return view("post.index",["post"=> $post]);
+}
+
     public function edit(UserPost $post)
     {
         //

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
 use Spatie\MediaLibrary\HasMedia;
 use Spatie\MediaLibrary\InteractsWithMedia;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
@@ -50,6 +51,19 @@ class UserPost extends Model implements HasMedia
     public function claps()
     {
         return $this->hasMany(Clap::class, 'userpost_id');
+    }
+    
+    /**
+     * Check if the current user has clapped this post using eager-loaded relationship
+     */
+    public function hasUserClapped()
+    {
+        if (!Auth::check()) {
+            return false;
+        }
+        
+        // Use eager-loaded claps relationship to avoid additional queries
+        return $this->claps->contains('user_id', Auth::id());
     }
 
     /**

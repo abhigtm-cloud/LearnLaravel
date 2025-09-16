@@ -93,6 +93,12 @@
                                     </svg>
                                     Profile
                                 </x-dropdown-link>
+                                <x-dropdown-link :href="route('my.post', ['user' => auth()->user()->username])" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                   My Posts
+                                </x-dropdown-link>
 
                                 <a href="#" class="flex items-center gap-3 px-4 py-3 text-sm text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
                                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,6 +172,10 @@
             <a href="{{ route('profile.edit') }}" class="block py-3 px-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
                 Profile
             </a>
+            <a href="{{ route('my.post', ['user' => auth()->user()->username]) }}" class="block py-3 px-2 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200">
+                My Posts
+            </a>
+          
         </div>
 
         <div class="px-4 py-6 border-t border-gray-200 dark:border-gray-700">

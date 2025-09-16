@@ -1,7 +1,7 @@
 @props(['post'])
 <div x-data="{
-    count: {{ $post->claps()->count() }},
-    hasClapped: {{ auth()->check() && auth()->user()->hasClapped($post) ? 'true' : 'false' }},
+    count: {{ $post->claps_count ?? $post->claps()->count() }},
+    hasClapped: {{ $post->hasUserClapped() ? 'true' : 'false' }},
     claps() {
         @auth
         {{-- debugger; --}}
@@ -33,6 +33,7 @@
         @endauth
     }
 }" class="">
+
     <button @click="claps()" 
             :class="hasClapped ? 'text-blue-600 bg-blue-50 border-blue-200' : 'text-gray-500 bg-white border-gray-200'"
             class="flex items-center gap-1.5 px-3 py-1.5 border rounded-full hover:shadow-md transition-all duration-200 text-sm font-medium">

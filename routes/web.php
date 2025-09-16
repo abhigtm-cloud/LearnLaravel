@@ -32,6 +32,7 @@ Route::middleware(['auth', 'verified'])->group(function(){
     Route::post("/post/store",[PostController::class,'store'])->name('post.store');
     Route::post('/clap/{post}', [ClapController::class, 'clappost'])->name('clappost');
     Route::get("/category/{category}",[PostController::class,'category'])->name('post.cat');
+     Route::get("/posts/{user:username}",[PostController::class,'myPosts'])->name('my.post');
     // Route::get('/clap/{post}', [ClapController::class, 'clapget'])->name('clapget');
 });
 
