@@ -43,8 +43,7 @@ class PostController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     */
-    public function store(PostControllerRequest $request)
+     */    public function store(PostControllerRequest $request)
     {
         // dump($request->all());
         // $data = $request->validate([
@@ -56,15 +55,14 @@ class PostController extends Controller
         // dd($data);
         $data = $request->validated();
 
-        // $image = $data['image'];
+        $image = $data['image'];
         unset($data['image']);
         $data['user_id']=Auth::id();
         $data['slug']=Str::slug($data['title']);
-        // $imagePath = $image->store('posts','public');
-        // $data['image'] = $imagePath;
-        $post = UserPost::create($data);
+        $imagePath = $image->store('posts','public');
+        $data['image'] = $imagePath;
+        UserPost::create($data);
        
-        $post->addMediaFromRequest('image')->toMediaCollection();
         return redirect()->route('dashboard');
     }
 

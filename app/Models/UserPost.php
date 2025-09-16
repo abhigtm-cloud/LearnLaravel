@@ -19,7 +19,7 @@ class UserPost extends Model implements HasMedia
         'title',
         'content',
         'slug',
-        // 'image',
+        'image',
         'user_id',
         'category_id'
     ];
@@ -85,6 +85,17 @@ class UserPost extends Model implements HasMedia
         
         return 'http://localhost/laravel_learn/LearnLaravel/public/storage/' . $media->id . '/' . $media->file_name;
     }
+    
+    // Alternative method using the test route
+    public function getMediaUrl()
+    {
+        $media = $this->getFirstMedia();
+        if (!$media) {
+            return null;
+        }
+        
+        return url('/media/' . $media->id . '/' . $media->file_name);
+    }
     public function readTime($wordsPerMinute = 100)
     {
         $wordCount = str_word_count(strip_tags($this->content));
@@ -92,4 +103,9 @@ class UserPost extends Model implements HasMedia
 
         return max(1, $minutes);
     }
+
+public function created_at(){
+    return $this->created_at->format('M d, Y');
+}
+
 }
