@@ -5,7 +5,7 @@
                 Update Post: <strong class="font-bold">{{ $post->title }}</strong>
             </h1>
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-8">
-                <form action="{{  route('post.update', $post->id) }}" 
+                <form action="{{  route('post.update', $post) }}" 
                 enctype="multipart/form-data" method="post">
 
                     @csrf
@@ -21,7 +21,7 @@
                     <div>
                         <x-input-label for="image" :value="__('Image')" />
                         <x-text-input id="image" class="block mt-1 w-full" type="file" name="image"
-                            :value="old('image')" autofocus />
+                            :value="old('image')" />
                         <x-input-error :messages="$errors->get('image')" class="mt-2" />
                     </div>
 
@@ -29,14 +29,14 @@
                     <div class="mt-4">
                         <x-input-label for="title" :value="__('Title')" />
                         <x-text-input id="title" class="block mt-1 w-full" type="text" name="title"
-                            :value="old('title', $post->title)" autofocus />
+                            :value="old('title', $post->title)" required />
                         <x-input-error :messages="$errors->get('title')" class="mt-2" />
                     </div>
 
                     <!-- Category -->
                     <div class="mt-4">
                         <x-input-label for="category_id" :value="__('Category')" />
-                        <select id="category_id" name="category_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full">
+                        <select id="category_id" name="category_id" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" required>
                             <option value="">Select a Category</option>
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" 
@@ -51,8 +51,9 @@
                     <!-- Content -->
                     <div class="mt-4">
                         <x-input-label for="content" :value="__('Content')" />
-                        <x-input-textarea id="content" class="block mt-1 w-full" name="content"
-                            >{{ old('content', $post->content) }}</x-input-textarea>
+                        <textarea id="content" name="content" rows="6" 
+                            class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm block mt-1 w-full" 
+                            required>{{ old('content', $post->content) }}</textarea>
                         <x-input-error :messages="$errors->get('content')" class="mt-2" />
                     </div>
                     
@@ -60,12 +61,12 @@
                     <div class="mt-4">
                         <x-input-label for="published_at" :value="__('Published At')" />
                         <x-text-input id="published_at" class="block mt-1 w-full" type="datetime-local" name="published_at"
-                            :value="old('published_at', $post->published_at)" autofocus />
+                            :value="old('published_at', $post->published_at ? $post->published_at->format('Y-m-d\TH:i') : '')" />
                         <x-input-error :messages="$errors->get('published_at')" class="mt-2" />
                     </div>
 
                     <x-primary-button class="mt-4">
-                        Submit
+                        Update Post
                     </x-primary-button>
                 </form>
             </div>

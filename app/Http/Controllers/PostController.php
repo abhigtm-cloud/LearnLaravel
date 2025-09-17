@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PostControllerRequest;
+use App\Http\Requests\PostUpdateRequest;
 use App\Models\Category;
 use App\Models\UserPost;
 use App\Models\User;
@@ -12,6 +13,7 @@ use Illuminate\Validation\Rules\Exists;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class PostController extends Controller
 {
@@ -133,17 +135,53 @@ public function myPosts(User $user){
         return view("post.index",["post"=> $post]);
 }
 
-    public function edit(UserPost $post)
+     public function edit(UserPost $post)
     {
-        //
+        if ($post->user_id !== Auth::id()) {
+            abort(403);
+        }
+        $categories = Category::get();
+        return view('post.edit', [
+            'post' => $post,
+            'categories' => $categories,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, UserPost $post)
+    public function update(PostUpdateRequest $request, UserPost $post)
     {
-        //
+        // Check if user owns the post
+        if ($post->user_id !== Auth::id()) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        $data = $request->validated();
+
+        // Handle image upload if a new image is provided
+        if (isset($data['image'])) {
+            $image = $data['image'];
+            unset($data['image']);
+            
+            // Delete old image if it exists
+            if ($post->image && Storage::disk('public')->exists($post->image)) {
+                Storage::disk('public')->delete($post->image);
+            }
+            
+            $imagePath = $image->store('posts', 'public');
+            $data['image'] = $imagePath;
+        }
+
+        // Update slug if title changed
+        if (isset($data['title']) && $data['title'] !== $post->title) {
+            $data['slug'] = Str::slug($data['title']);
+        }
+
+        $post->update($data);
+
+        return redirect()->route('post.show', ['username' => $post->user->username, 'post' => $post->slug])
+                       ->with('success', 'Post updated successfully!');
     }
 
     /**

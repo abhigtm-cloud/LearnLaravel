@@ -29,6 +29,8 @@ Route::middleware(['auth', 'verified'])->group(function(){
 // Move this inside auth middleware
     Route::post("/follow/{user}",[FollowerController::class,'followUnfollow'])->name('follow');
     Route::get("/post/create",[PostController::class,'create'])->name('post.create');
+    Route::get("/post/edit/{post}",[PostController::class,'edit'])->name('post.edit');
+    Route::put("/post/edit/{post}", [PostController::class, 'update'])->name('post.update');
         Route::delete("/post/delete/{post}",[PostController::class,'destroy'])->name('post.destroy');
 
     Route::post("/post/store",[PostController::class,'store'])->name('post.store');
